@@ -1,0 +1,11 @@
+<% include elements/header %>
+
+    <div class="container">
+			<h2>Restaurantes</h2>
+			<p class=""><a href="/restaurantes/novo" class="">Novo Restaurante</a><p/>
+				<% restaurantes.forEach(r => { %>
+					<p> <%= r.nome %> </p>
+				<% 	}) %>
+    </main>
+
+<% include elements/footer %>
