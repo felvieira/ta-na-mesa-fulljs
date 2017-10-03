@@ -5,6 +5,8 @@ const port = process.eventNames.PORT || 3000
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
 
+const ObjectID = mongodb.ObjectID
+
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded())
@@ -45,7 +47,18 @@ const find = (db, collectionName, filter) => {
 	})
 }
 
-
+const deleteOne = (db, collectionName, filter) => {
+	return new Promise ((resolve,reject) => {
+		const  collection = db.collection(collectionName)
+		collection.deleteOne(filter, (err,results) => {
+			if(err){
+				reject(err)
+			}else{
+				resolve(results)
+			}
+		})
+	})
+}
 
 app.get('/', (req,res) => res.render('index'))
 
@@ -58,10 +71,20 @@ app.get('/restaurantes/novo', (req,res) => {
 	res.render('restaurante_novo')
 })
 
+app.get('/restaurantes/delete/:id', async(req,res) => {
+	await deleteOne(database, 'restaurantes', {
+	_id: ObjectID(req.params.id)
+})
+res.redirect('/restaurantes')
+})
 
 app.post('/restaurantes/novo', async(req,res) => {
 	const restaurante = {
-		nome: req.body.nome
+		nome: req.body.nome,
+		loc:{
+			type: 'Point',
+			coordinates: [ parseFloat(req.body.lng), parseFloat(req.body.lat)]
+		}
 	}
 	console.log(req.body)
 	await insert(database, 'restaurantes', restaurante)

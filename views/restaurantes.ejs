@@ -4,7 +4,7 @@
 			<h2>Restaurantes</h2>
 			<p class=""><a href="/restaurantes/novo" class="">Novo Restaurante</a><p/>
 				<% restaurantes.forEach(r => { %>
-					<p> <%= r.nome %> </p>
+					<p> <%= r.nome %> <a href="/restaurantes/delete/<%= r._id %>">Excluir</a></p>
 				<% 	}) %>
     </main>
 
