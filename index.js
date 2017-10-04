@@ -137,7 +137,9 @@ app.post('/restaurantes/novo', async(req,res) => {
 
 // MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
 
-MongoClient.connect('mongodb://felipe:1qazxsw2@ds147544.mlab.com:47544/tanamesa', (err,db) => {
+	let url = process.env.MONGOLAB_URI;
+
+MongoClient.connect(url, (err,db) => {
 	if (err){
 		console.log('Erro ao conectar ao mongodb')
 	}
