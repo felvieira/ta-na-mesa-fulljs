@@ -137,7 +137,7 @@ app.post('/restaurantes/novo', async(req,res) => {
 
 // MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
 
-	let url = process.env.MONGOLAB_URI;
+	const url = process.env.MONGOLAB_URI;
 
 MongoClient.connect(url, (err,db) => {
 	if (err){

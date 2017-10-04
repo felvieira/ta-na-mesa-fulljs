@@ -152,7 +152,11 @@ app.post('/restaurantes/novo', (() => {
 	};
 })());
 
-MongoClient.connect('mongodb://localhost:27017/tanamesa', (err, db) => {
+// MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
+
+const url = process.env.MONGOLAB_URI;
+
+MongoClient.connect(url, (err, db) => {
 	if (err) {
 		console.log('Erro ao conectar ao mongodb');
 	} else {
@@ -164,4 +168,6 @@ MongoClient.connect('mongodb://localhost:27017/tanamesa', (err, db) => {
 		app.listen(port, () => console.log('Ta na mesa server running'));
 	}
 });
+
+// "start": "./node_modules/.bin/babel-node index.js",
 //# sourceMappingURL=index.js.map
