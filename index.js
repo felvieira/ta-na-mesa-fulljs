@@ -135,9 +135,12 @@ app.post('/restaurantes/novo', async(req,res) => {
 	res.redirect('/restaurantes')
 })
 
-// MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
-
+	// Mlab
 	const url = process.env.MONGOLAB_URI;
+	// Mlab Heroku
+	const url = process.env.MONGODB_URI;
+	// Local
+	// const url = 'mongodb://localhost:27017/tanamesa';
 
 MongoClient.connect(url, (err,db) => {
 	if (err){
