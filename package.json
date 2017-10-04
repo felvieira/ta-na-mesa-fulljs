@@ -8,7 +8,7 @@
 		"clean": "rm -rf build && mkdir build",
 		"build-server": "babel -d ./build ./index.js -s",
 		"build": "npm run clean && npm run build-server",
-		"start": "npm run clean && npm run build-server && node ./build/index.js",
+		"start": "node ./build/index.js",
 		"debug": "node --debug ./build/index.js"
   },
   "author": "Felipe Vieira",
