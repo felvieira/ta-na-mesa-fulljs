@@ -1,0 +1,42 @@
+<% include elements/header %>
+	<div id="map" class="" style="height: 400px;"></div>
+
+<div class="container">
+	<table class="table">
+		<tr class="">
+			<th class="">Restaurante</th>
+			<th class="">Distância (<%= results.stats.avgDistance.toFixed(3) %> km)</th>
+		</tr>
+		<% results.results.forEach(res => { %>
+			<tr>
+				<td><%= res.obj.nome %></td>
+				<td><%= (res.dis).toFixed(3) %> km</td>
+			</tr>
+			<% }) %>
+	</table>
+</div>
+
+<% include elements/footer %>
+
+<script>
+		function initMap(){
+			const initialLocation = { lat: <%= lat %>, lng: <%= lng %>}
+			const map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 16,
+				center: initialLocation
+			})
+
+		<% results.results.forEach(res => { %>
+			var latlng<%= res.obj._id %> = new google.maps.LatLng(<%= res.obj.loc.coordinates[1] %>, <%= res.obj.loc.coordinates[0] %>)
+			const marker<%= res.obj._id %> = new google.maps.Marker({
+				position: latlng<%= res.obj._id %>,
+				map: map,
+
+			})
+		<% }) %>
+
+		}
+	</script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA73WO9YHWbuXVvi7-Y1lknX6Sf-UegNeU&callback=initMap"
+	async defer></script>

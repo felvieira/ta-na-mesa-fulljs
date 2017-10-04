@@ -1,0 +1,47 @@
+<% include elements/header %>
+
+	<div class="container">
+		<h2>Ver Distância</h2>
+		<p class=""><a href="/restaurantes" class="">Listar Restaurantes</a>
+			<p/>
+			<form method="get">
+				<div id="map" class="" style="height: 400px;"></div>
+				<input type="hidden" class="" name="lat" id="lat">
+				<input type="hidden" class="" name="lng" id="lng">
+				<button type="submit" class="btn btn-primary">Ver distância</button>
+			</form>
+	</div>
+	<script>
+		function initMap(){
+			const initialLocation = { lat:-25.363, lng: 131.044}
+			const map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 16,
+				center: initialLocation
+			})
+
+			const marker = new google.maps.Marker({
+				position: initialLocation,
+				map: map,
+				draggable:true
+			})
+
+			if(navigator.geolocation){
+				navigator.geolocation.getCurrentPosition(function(position){
+					var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+					marker.setPosition(latlng)
+					map.panTo(latlng)
+				})
+			}
+			
+			marker.addListener('dragend', function(){
+				document.getElementById('lat').value = marker.position.lat()
+				document.getElementById('lng').value = marker.position.lng()
+
+			})
+		}
+	</script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA73WO9YHWbuXVvi7-Y1lknX6Sf-UegNeU&callback=initMap"
+	async defer></script>
+
+	<% include elements/footer %>

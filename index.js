@@ -78,6 +78,25 @@ app.get('/restaurantes/delete/:id', async(req,res) => {
 res.redirect('/restaurantes')
 })
 
+// Pegar distancia entre localização do cliente e dos restaurantes
+app.get('/restaurantes/distancia', (req,res) => {
+	const { lat, lng } = req.query
+	if(!lat || !lng){
+		res.render('restaurante_distancia_map')
+	} else {
+		database.command({
+			geoNear: 'restaurantes',
+			near: [parseFloat(lng), parseFloat(lat)],
+			spherical: true,
+			// para pegar em metros
+			distanceMultiplier: 6378.1
+		}, (err, results) => {
+			console.log(err, results)
+			res.render('restaurante_distancia', {	results, lat, lng	})
+		})
+	}
+})
+
 app.post('/restaurantes/novo', async(req,res) => {
 	const restaurante = {
 		nome: req.body.nome,
@@ -92,6 +111,15 @@ app.post('/restaurantes/novo', async(req,res) => {
 })
 
 MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
-	database = db
+	if (err){
+		console.log('Erro ao conectar ao mongodb')
+	}
+	else{
+		database = db
+
+		const restaurantes = db.collection('restaurantes')
+		restaurantes.createIndex({ loc: '2dsphere'})
+
 	app.listen(port, () => console.log('Ta na mesa server running'))
+	}
 })
