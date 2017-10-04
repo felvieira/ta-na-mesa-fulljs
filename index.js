@@ -156,8 +156,9 @@ MongoClient.connect(url, (err,db) => {
 
 		const restaurantes = db.collection('restaurantes')
 		restaurantes.createIndex({ loc: '2dsphere'})
-
-	app.listen(port, () => console.log('Ta na mesa server running'))
+		
+	app.listen(port, (err) => console.log(err,'Ta na mesa server running'))
+	// app.listen(port, () => console.log('Ta na mesa server running'))
 	}
 })
 
