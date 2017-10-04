@@ -97,6 +97,31 @@ app.get('/restaurantes/distancia', (req,res) => {
 	}
 })
 
+app.get('/api/restaurantes/distancia', (req,res) => {
+	const { lat, lng } = req.query
+	if(!lat || !lng){
+		res.send([])
+	} else {
+		database.command({
+			geoNear: 'restaurantes',
+			near: [parseFloat(lng), parseFloat(lat)],
+			spherical: true,
+			// para pegar em metros
+			distanceMultiplier: 6378.1
+		}, (err, results) => {
+			const positions = results.results.map( r => {
+				return {
+					dis: r.obj.nome,
+					lat: r.obj.loc.coordinates[1],
+					lng: r.obj.loc.coordinates[0],
+					dis: r.dis,
+				}
+			})
+			res.send(postiions)
+		})
+	}
+})
+
 app.post('/restaurantes/novo', async(req,res) => {
 	const restaurante = {
 		nome: req.body.nome,
