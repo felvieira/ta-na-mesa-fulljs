@@ -148,3 +148,5 @@ MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
 	app.listen(port, () => console.log('Ta na mesa server running'))
 	}
 })
+
+		// "start": "./node_modules/.bin/babel-node index.js",
