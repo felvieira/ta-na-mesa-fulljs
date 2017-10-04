@@ -152,9 +152,12 @@ app.post('/restaurantes/novo', (() => {
 	};
 })());
 
-// MongoClient.connect('mongodb://localhost:27017/tanamesa', (err,db) => {
-
-const url = process.env.MONGOLAB_URI;
+// Mlab
+// const url = process.env.MONGOLAB_URI;
+// Mlab Heroku
+const url = process.env.MONGODB_URI;
+// Local
+// const url = 'mongodb://localhost:27017/tanamesa';
 
 MongoClient.connect(url, (err, db) => {
 	if (err) {
