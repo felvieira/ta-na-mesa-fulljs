@@ -137,8 +137,13 @@ app.post('/restaurantes/novo', async(req,res) => {
 
 	// Mlab
 	// const url = process.env.MONGOLAB_URI;
+	
+	//SE FOR TESTAR O PROJETO USAR ESSA URL SE NAO TIVER O MONGO RODANDO LOCALMENTE
+	// const url = 'mongodb://felipe:1qazxsw2@ds147544.mlab.com:47544/tanamesa'
+	
 	// Mlab Heroku
 	const url = process.env.MONGODB_URI;
+	
 	// Local
 	// const url = 'mongodb://localhost:27017/tanamesa';
 
